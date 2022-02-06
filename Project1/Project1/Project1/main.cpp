@@ -15,6 +15,8 @@ int rasterSize[] = { 800, 600 };
 int numOfVertices = 0;
 float v[2 * 3];
 float color[3];
+float pointSize;
+float lineWidth;
 
 float mousePos[2];
 
@@ -25,12 +27,13 @@ void init(void)
     mousePos[0] = mousePos[1] = 0.0f;
     color[0] = 1.0f;
     color[1] = color[2] = 0.0f;
+    pointSize = 10.0f;
 }
 
 void drawCursor()
 {
     glColor3f(1.0f, 0.0f, 1.0f);
-    glPointSize(10.0f);
+    glPointSize(pointSize);
     glBegin(GL_POINTS);
     glVertex2fv(mousePos);
     glEnd();
@@ -140,20 +143,50 @@ void menu(int value)
         color[2] = 1.0f;
         glutPostRedisplay();
         break;
+    case 10:
+        pointSize = 5.0f;
+        break;
+    case 11:
+        pointSize = 10.0f;
+        break;
+    case 12:
+        pointSize = 20.0f;
+        break;
     default:
         break;
     }
 }
 void createMenu()
 {
+
     int colorMenu = glutCreateMenu(menu);
     glutAddMenuEntry("Red", 2);
     glutAddMenuEntry("Green", 3);
     glutAddMenuEntry("Blue", 4);
 
+    int shapeMenu = glutCreateMenu(menu);
+    glutAddMenuEntry("Points", 5);
+    glutAddMenuEntry("Triangles", 6);
+    glutAddMenuEntry("Quads", 7);
+    glutAddMenuEntry("Polygons", 8);
+    glutAddMenuEntry("Lines", 9);
+
+    int pointMenu = glutCreateMenu(menu);
+    glutAddMenuEntry("Small", 10);
+    glutAddMenuEntry("Medium", 11);
+    glutAddMenuEntry("Large", 12);
+
+    int lineMenu = glutCreateMenu(menu);
+    glutAddMenuEntry("Thin", 13);
+    glutAddMenuEntry("Medium", 14);
+    glutAddMenuEntry("Thick", 15);
+
     glutCreateMenu(menu);
     glutAddMenuEntry("Clear", 0);
     glutAddSubMenu("Colors", colorMenu);
+    glutAddSubMenu("Objects", shapeMenu);
+    glutAddSubMenu("Point Size", pointMenu);
+    glutAddSubMenu("Line Width", lineMenu);
     glutAddMenuEntry("Exit", 1);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }

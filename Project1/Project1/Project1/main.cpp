@@ -21,6 +21,13 @@ float lineWidth;
 int mode;
 vector<vector<float>> points;
 float pointPos[2];
+vector<vector<float>> lines;
+float linePos[2];
+vector<vector<float>> triangles;
+float triPos[6];
+vector<vector<float>> quads;
+float quadPos[4];
+float shapeColor[3];
 
 float mousePos[2];
 
@@ -54,30 +61,57 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    if (numOfVertices > 0 && numOfVertices < 3) {
+    switch (mode)
+    {
+        case 1:
+            if (numOfVertices > 0 && numOfVertices < 3) {
 
-        glBegin(GL_LINE_STRIP);
-        for (int i = 0; i < numOfVertices; i++)
-            glVertex2fv(v + i * 2);
-        glVertex2fv(mousePos);
-        glEnd();
+                glBegin(GL_LINE_STRIP);
+                for (int i = 0; i < numOfVertices; i++)
+                    glVertex2fv(v + i * 2);
+                glVertex2fv(mousePos);
+                glEnd();
+            }
+            break;
     }
-    else if (numOfVertices == 3) {
+
+    // Display triangles
+    if (numOfVertices == 3) {
         glBegin(GL_TRIANGLES);
         for (int i = 0; i < numOfVertices; i++)
             glVertex2fv(v + i * 2);
         glEnd();
     }
 
+    // Display points
     for (int i = 0; i < points.size(); i += 2)
     {
-        glColor3fv(color);
+        shapeColor[0] = points[i][2];
+        shapeColor[1] = points[i][3];
+        shapeColor[2] = points[i][4];
+        glColor3fv(shapeColor);
         glPointSize(points[i][1]);
         glBegin(GL_POINTS);
         pointPos[0] = points[i][0];
         pointPos[1] = points[i + 1][0];
         glVertex2fv(pointPos);
         glEnd();
+    }
+
+    // Display lines
+    if (lines.size() % 4 == 0)
+    {
+        for (int i = 0; i < lines.size(); i += 4)
+        {
+            glBegin(GL_LINE_STRIP);
+            linePos[0] = lines[i][0];
+            linePos[1] = lines[i + 1][0];
+            glVertex2fv(linePos);
+            linePos[0] = lines[i + 2][0];
+            linePos[1] = lines[i + 3][0];
+            glVertex2fv(linePos);
+            glEnd();
+        }
     }
 
     drawCursor();
@@ -101,22 +135,29 @@ void mouse(int button, int state, int x, int y)
 {
     switch (mode)
     {
+        mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
+        mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
         case 0:
-            points.push_back({ mousePos[0],pointSize });
-            points.push_back({ mousePos[1],pointSize });
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                points.push_back({ mousePos[0],pointSize,color[0],color[1],color[2] });
+                points.push_back({ mousePos[1],pointSize,color[0],color[1],color[2] });
+            }
             break;
         case 1:
             if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
                 if (numOfVertices >= 3)
                     numOfVertices = 0;
-
-                mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
-                mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
                 v[numOfVertices * 2 + 0] = mousePos[0];
                 v[numOfVertices * 2 + 1] = mousePos[1];
 
                 numOfVertices++;
                 glutPostRedisplay();
+            }
+            break;
+        case 4:
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                lines.push_back({ mousePos[0], lineWidth });
+                lines.push_back({ mousePos[1], lineWidth });
             }
             break;
     }
@@ -238,7 +279,7 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(rasterSize[0], rasterSize[1]);
-    glutCreateWindow("Mouse Event - draw a triangle");
+    glutCreateWindow("2D Drawing");
 
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);

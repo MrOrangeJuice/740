@@ -6,6 +6,7 @@
 #endif
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 float canvasSize[] = { 10.0f, 10.0f };
@@ -17,6 +18,9 @@ float v[2 * 3];
 float color[3];
 float pointSize;
 float lineWidth;
+int mode;
+vector<vector<float>> points;
+float pointPos[2];
 
 float mousePos[2];
 
@@ -28,6 +32,7 @@ void init(void)
     color[0] = 1.0f;
     color[1] = color[2] = 0.0f;
     pointSize = 10.0f;
+    mode = 1;
 }
 
 void drawCursor()
@@ -64,6 +69,17 @@ void display(void)
         glEnd();
     }
 
+    for (int i = 0; i < points.size(); i += 2)
+    {
+        glColor3fv(color);
+        glPointSize(points[i][1]);
+        glBegin(GL_POINTS);
+        pointPos[0] = points[i][0];
+        pointPos[1] = points[i + 1][0];
+        glVertex2fv(pointPos);
+        glEnd();
+    }
+
     drawCursor();
     glutSwapBuffers();
 }
@@ -83,17 +99,26 @@ void reshape(int w, int h)
 
 void mouse(int button, int state, int x, int y)
 {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        if (numOfVertices >= 3)
-            numOfVertices = 0;
+    switch (mode)
+    {
+        case 0:
+            points.push_back({ mousePos[0],pointSize });
+            points.push_back({ mousePos[1],pointSize });
+            break;
+        case 1:
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                if (numOfVertices >= 3)
+                    numOfVertices = 0;
 
-        mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
-        mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
-        v[numOfVertices * 2 + 0] = mousePos[0];
-        v[numOfVertices * 2 + 1] = mousePos[1];
+                mousePos[0] = (float)x / rasterSize[0] * canvasSize[0];
+                mousePos[1] = (float)(rasterSize[1] - y) / rasterSize[1] * canvasSize[1];
+                v[numOfVertices * 2 + 0] = mousePos[0];
+                v[numOfVertices * 2 + 1] = mousePos[1];
 
-        numOfVertices++;
-        glutPostRedisplay();
+                numOfVertices++;
+                glutPostRedisplay();
+            }
+            break;
     }
 }
 
@@ -121,6 +146,7 @@ void menu(int value)
     switch (value) {
     case 0: // clear
         numOfVertices = 0;
+        points.clear();
         glutPostRedisplay();
         break;
     case 1: //exit
@@ -142,6 +168,21 @@ void menu(int value)
         color[1] = 0.0f;
         color[2] = 1.0f;
         glutPostRedisplay();
+        break;
+    case 5:
+        mode = 0;
+        break;
+    case 6:
+        mode = 1;
+        break;
+    case 7:
+        mode = 2;
+        break;
+    case 8:
+        mode = 3;
+        break;
+    case 9:
+        mode = 4;
         break;
     case 10:
         pointSize = 5.0f;

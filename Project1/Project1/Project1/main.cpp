@@ -29,6 +29,8 @@ vector<vector<float>> quads;
 float quadPos[2];
 float quadPos2[2];
 float shapeColor[3];
+vector<vector<float>> polygon;
+float polyPos[2];
 
 float mousePos[2];
 
@@ -62,18 +64,15 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    switch (mode)
-    {
-        case 1:
-            if (numOfVertices > 0 && numOfVertices < 3) {
-
-                glBegin(GL_LINE_STRIP);
-                for (int i = 0; i < numOfVertices; i++)
-                    glVertex2fv(v + i * 2);
-                glVertex2fv(mousePos);
-                glEnd();
-            }
-            break;
+    if (numOfVertices > 0 && numOfVertices < 3) {
+        if (mode == 1)
+        {
+            glBegin(GL_LINE_STRIP);
+            for (int i = 0; i < numOfVertices; i++)
+                glVertex2fv(v + i * 2);
+            glVertex2fv(mousePos);
+            glEnd();
+        }
     }
 
     // Display triangles
@@ -162,42 +161,67 @@ void display(void)
         }
         else
         {
-            glBegin(GL_LINE_STRIP);
-            shapeColor[0] = quads[i][2];
-            shapeColor[1] = quads[i][3];
-            shapeColor[2] = quads[i][4];
-            glColor3fv(shapeColor);
-            // Line 1 (--)
-            quadPos[0] = quads[i][0];
-            quadPos[1] = quads[i + 1][0];
-            quadPos2[0] = mousePos[0];
-            quadPos2[1] = quads[i + 1][0];
-            glVertex2fv(quadPos);
-            glVertex2fv(quadPos2);
-            // Line 2 (|)
-            quadPos[0] = mousePos[0];
-            quadPos[1] = quads[i + 1][0];
-            quadPos2[0] = mousePos[0];
-            quadPos2[1] = mousePos[1];
-            glVertex2fv(quadPos);
-            glVertex2fv(quadPos2);
-            // Line 3 (|)
-            quadPos[0] = quads[i][0];
-            quadPos[1] = quads[i+1][0];
-            quadPos2[0] = quads[i][0];
-            quadPos2[1] = mousePos[1];
-            glVertex2fv(quadPos);
-            glVertex2fv(quadPos2);
-            // Line 4 (--)
-            quadPos[0] = quads[i][0];
-            quadPos[1] = mousePos[1];
-            quadPos2[0] = mousePos[0];
-            quadPos2[1] = mousePos[1];
-            glVertex2fv(quadPos);
-            glVertex2fv(quadPos2);
-
-            glEnd();
+            if (mode == 2)
+            {
+                glBegin(GL_LINE_STRIP);
+                shapeColor[0] = quads[i][2];
+                shapeColor[1] = quads[i][3];
+                shapeColor[2] = quads[i][4];
+                glColor3fv(shapeColor);
+                // Line 1 (--)
+                quadPos[0] = quads[i][0];
+                quadPos[1] = quads[i + 1][0];
+                quadPos2[0] = mousePos[0];
+                quadPos2[1] = quads[i + 1][0];
+                glVertex2fv(quadPos);
+                glVertex2fv(quadPos2);
+                // Line 2 (|)
+                quadPos[0] = mousePos[0];
+                quadPos[1] = quads[i + 1][0];
+                quadPos2[0] = mousePos[0];
+                quadPos2[1] = mousePos[1];
+                glVertex2fv(quadPos);
+                glVertex2fv(quadPos2);
+                // Line 3 (|)
+                quadPos[0] = quads[i][0];
+                quadPos[1] = quads[i + 1][0];
+                quadPos2[0] = quads[i][0];
+                quadPos2[1] = mousePos[1];
+                glVertex2fv(quadPos);
+                glVertex2fv(quadPos2);
+                // Line 4 (--)
+                quadPos[0] = quads[i][0];
+                quadPos[1] = mousePos[1];
+                quadPos2[0] = mousePos[0];
+                quadPos2[1] = mousePos[1];
+                glVertex2fv(quadPos);
+                glVertex2fv(quadPos2);
+                glEnd();
+            }
         }
+    }
+
+    // Display polygon
+
+    if (polygon.size() >= 6)
+    {
+        glBegin(GL_POLYGON);
+        shapeColor[0] = polygon[0][2];
+        shapeColor[1] = polygon[0][3];
+        shapeColor[2] = polygon[0][4];
+        for (int i = 0; i < polygon.size(); i += 2)
+        {
+            polyPos[0] = polygon[i][0];
+            polyPos[1] = polygon[i + 1][0];
+            glVertex2fv(polyPos);
+        }
+        if (mode == 3)
+        {
+            polyPos[0] = mousePos[0];
+            polyPos[1] = mousePos[1];
+        }
+        glVertex2fv(polyPos);
+        glEnd();
     }
 
     drawCursor();
@@ -246,8 +270,11 @@ void mouse(int button, int state, int x, int y)
                 quads.push_back({ mousePos[1],pointSize,color[0],color[1],color[2] });
             }
             break;
-            break;
         case 3:
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                polygon.push_back({ mousePos[0],pointSize,color[0],color[1],color[2] });
+                polygon.push_back({ mousePos[1],pointSize,color[0],color[1],color[2] });
+            }
             break;
         case 4:
             if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {

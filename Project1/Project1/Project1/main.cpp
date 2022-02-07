@@ -26,7 +26,8 @@ float linePos[2];
 vector<vector<float>> triangles;
 float triPos[6];
 vector<vector<float>> quads;
-float quadPos[4];
+float quadPos[2];
+float quadPos2[2];
 float shapeColor[3];
 
 float mousePos[2];
@@ -104,15 +105,100 @@ void display(void)
         if (i != lines.size() - 2)
         {
             glBegin(GL_LINE_STRIP);
-            linePos[0] = lines[i][0];
-            linePos[1] = lines[i + 1][0];
+            shapeColor[0] = lines[i][2];
+            shapeColor[1] = lines[i][3];
+            shapeColor[2] = lines[i][4];
+            glColor3fv(shapeColor);
+            linePos[0] = quads[i][0];
+            linePos[1] = quads[i + 1][0];
             glVertex2fv(linePos);
-            linePos[0] = lines[i + 2][0];
+            linePos[0] = quads[i + 2][0];
             linePos[1] = lines[i + 3][0];
             glVertex2fv(linePos);
             glEnd();
         }
+        else
+        {
+            glBegin(GL_LINE_STRIP);
+            shapeColor[0] = lines[i][2];
+            shapeColor[1] = lines[i][3];
+            shapeColor[2] = lines[i][4];
+            glColor3fv(shapeColor);
+            linePos[0] = lines[i][0];
+            linePos[1] = lines[i + 1][0];
+            glVertex2fv(linePos);
+            glVertex2fv(mousePos);
+            glEnd();
+        }
      }
+
+    // Display Quads
+    for (int i = 0; i < quads.size(); i += 4)
+    {
+        if (i != quads.size() - 2)
+        {
+            glBegin(GL_QUADS);
+            shapeColor[0] = quads[i][2];
+            shapeColor[1] = quads[i][3];
+            shapeColor[2] = quads[i][4];
+            glColor3fv(shapeColor);
+            // Point 1
+            quadPos[0] = quads[i][0];
+            quadPos[1] = quads[i + 1][0];
+            glVertex2fv(quadPos);
+            // Point 2
+            quadPos[0] = quads[i][0];
+            quadPos[1] = quads[i + 3][0];
+            glVertex2fv(quadPos);
+            // Point 3
+            quadPos[0] = quads[i + 2][0];
+            quadPos[1] = quads[i + 3][0];
+            glVertex2fv(quadPos);
+            // Point 4
+            quadPos[0] = quads[i + 2][0];
+            quadPos[1] = quads[i + 1][0];
+            glVertex2fv(quadPos);
+            glEnd();
+        }
+        else
+        {
+            glBegin(GL_LINE_STRIP);
+            shapeColor[0] = quads[i][2];
+            shapeColor[1] = quads[i][3];
+            shapeColor[2] = quads[i][4];
+            glColor3fv(shapeColor);
+            // Line 1 (--)
+            quadPos[0] = quads[i][0];
+            quadPos[1] = quads[i + 1][0];
+            quadPos2[0] = mousePos[0];
+            quadPos2[1] = quads[i + 1][0];
+            glVertex2fv(quadPos);
+            glVertex2fv(quadPos2);
+            // Line 2 (|)
+            quadPos[0] = mousePos[0];
+            quadPos[1] = quads[i + 1][0];
+            quadPos2[0] = mousePos[0];
+            quadPos2[1] = mousePos[1];
+            glVertex2fv(quadPos);
+            glVertex2fv(quadPos2);
+            // Line 3 (|)
+            quadPos[0] = quads[i][0];
+            quadPos[1] = quads[i+1][0];
+            quadPos2[0] = quads[i][0];
+            quadPos2[1] = mousePos[1];
+            glVertex2fv(quadPos);
+            glVertex2fv(quadPos2);
+            // Line 4 (--)
+            quadPos[0] = quads[i][0];
+            quadPos[1] = mousePos[1];
+            quadPos2[0] = mousePos[0];
+            quadPos2[1] = mousePos[1];
+            glVertex2fv(quadPos);
+            glVertex2fv(quadPos2);
+
+            glEnd();
+        }
+    }
 
     drawCursor();
     glutSwapBuffers();
@@ -154,10 +240,19 @@ void mouse(int button, int state, int x, int y)
                 glutPostRedisplay();
             }
             break;
+        case 2:
+            if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+                quads.push_back({ mousePos[0],pointSize,color[0],color[1],color[2] });
+                quads.push_back({ mousePos[1],pointSize,color[0],color[1],color[2] });
+            }
+            break;
+            break;
+        case 3:
+            break;
         case 4:
             if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-                lines.push_back({ mousePos[0], lineWidth });
-                lines.push_back({ mousePos[1], lineWidth });
+                lines.push_back({ mousePos[0], lineWidth, color[0],color[1],color[2] });
+                lines.push_back({ mousePos[1], lineWidth, color[0],color[1],color[2] });
             }
             break;
     }

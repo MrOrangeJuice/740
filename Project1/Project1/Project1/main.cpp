@@ -99,9 +99,9 @@ void display(void)
     }
 
     // Display lines
-    if (lines.size() % 4 == 0)
+    for (int i = 0; i < lines.size(); i += 4)
     {
-        for (int i = 0; i < lines.size(); i += 4)
+        if (i != lines.size() - 2)
         {
             glBegin(GL_LINE_STRIP);
             linePos[0] = lines[i][0];
@@ -112,7 +112,7 @@ void display(void)
             glVertex2fv(linePos);
             glEnd();
         }
-    }
+     }
 
     drawCursor();
     glutSwapBuffers();

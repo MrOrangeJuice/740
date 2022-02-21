@@ -1,6 +1,6 @@
 //Usage:
-//Hold down the number keys , 1-7, to select one or multiple circles.
-//While circle(s) are selected, use the left mouse button to translate and use the right mouse button to rotate.
+//Hold down the number keys , 1 or 2, to select one or two quads.
+//While quad(s) are selected, use the left mouse button to translate and use the right mouse button to rotate.
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -12,18 +12,14 @@
 #include <math.h>
 using namespace std;
 
-#define MAX_NUM_CIRCLE 7
-#define CIRCLE_RADIUM 2.0
-
 int win_width = 600, win_height = 600;
-float canvas_width = 20.0f; float canvas_height = 20.0f;
-
+float canvas_width = 20.0f, canvas_height = 20.0f;
 
 bool keyStates[256];
 int buttonState;
-float colors[3 * MAX_NUM_CIRCLE];
-float translations[2 * MAX_NUM_CIRCLE];
-float rotations[MAX_NUM_CIRCLE];
+float colors[3 * 2];
+float translations[2 * 2];
+float rotations[2];
 
 float curMouse[2];
 float preMouse[2];
@@ -33,28 +29,45 @@ void init(void)
     for (int i = 0; i < 256; i++) {
         keyStates[i] = false;
     }
-    for (int i = 0; i < MAX_NUM_CIRCLE; i++) {
-        colors[i * 3 + 0] = 0.0f; // red
-        colors[i * 3 + 1] = 0.0f; // green
-        colors[i * 3 + 2] = 0.0f; // blue
 
-        translations[i * 2 + 0] = 0.0f; // x
-        translations[i * 2 + 1] = 0.0f; // y
+    // color of the first quad
+    colors[0] = 0.0f; // red
+    colors[1] = 0.0f; // green
+    colors[2] = 0.0f; // blue
 
-        rotations[i] = 0.0f;
-    }
+    // color of the second quad
+    colors[3] = 0.0f; // red
+    colors[4] = 0.0f; // green
+    colors[5] = 1.0f; // blue
 
-    buttonState = -1;
+    // translation of the first quad
+    translations[0] = 0.0f; // x
+    translations[1] = 0.0f; // y
+
+    // translation of the second quad
+    translations[2] = 5.0f; // x
+    translations[3] = 0.0f; // y
+
+    // rotaion of the first quad
+    rotations[0] = 0.0f;
+
+    // rotation of the second quad
+    rotations[1] = 0.0f;
+
+    buttonState = -1; // no mouse button
 }
 
-void drawCircle(float radius, const float* c)
+void drawQuad(float left, float right, float top, float bottom, float* color)
 {
-    glColor3fv(c);
+    glColor3fv(color);
     glLineWidth(3.0f);
-    glBegin(GL_LINE_STRIP);
-    for (int i = 0; i <= 100; i++)
-        glVertex2f(radius * cosf(3.14 * 2 / 100 * i), radius * sinf(3.14 * 2 / 100 * i));
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(left, bottom);
+    glVertex2f(left, top);
+    glVertex2f(right, top);
+    glVertex2f(right, bottom);
     glEnd();
+    glLineWidth(1.0f);
 }
 
 void display(void)
@@ -65,48 +78,15 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // the following codes could be written in a for loop.
-    // Here I expand them so that you can better trace the changes of cirlce's coordinate system.
+    // transform the first quad // (-3, -3) and (3, 3)
+    glTranslatef(translations[0], translations[1], 0.0f);
+    glRotatef(rotations[0], 0.0f, 0.0f, 1.0f);
+    drawQuad(-3, 3, 3, -3, colors);
 
-    int cid = -1; // the index of current circle
-    // circle 0
-    cid = 0;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
-    // circle 1
-    cid = 1;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    glPushMatrix(); // push the circle 1's CS to the modelview stack
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
-    // circle 2
-    cid = 2;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
-    // circle 3
-    cid = 3;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
-
-    glPopMatrix(); // back to the CS of Circle 1
-    // circle 4
-    cid = 4;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
-
-    // circle 5
-    cid = 5;
-    glTranslatef(translations[cid * 2 + 0], translations[cid * 2 + 1], 0.0f);
-    glRotatef(rotations[cid], 0.0f, 0.0f, 1.0f);
-    drawCircle(CIRCLE_RADIUM * (MAX_NUM_CIRCLE - cid) / MAX_NUM_CIRCLE, colors + cid * 3);
+    // transform the second quad // (4, -1) and (5, 1)
+    glTranslatef(translations[2], translations[3], 0.0f);
+    glRotatef(rotations[1], 0.0f, 0.0f, 1.0f);
+    drawQuad(4, 5, 1, -1, colors + 3);
 
 
     glutSwapBuffers();
@@ -119,7 +99,7 @@ void reshape(int w, int h)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(-canvas_width / 2.0f, canvas_width / 2.0f, -canvas_height / 2.0f, canvas_height / 2.0f);
+    gluOrtho2D(-canvas_width / 2, canvas_width / 2, -canvas_height / 2, canvas_height / 2);
     glViewport(0, 0, (GLsizei)win_width, (GLsizei)win_height);
 
     glutPostRedisplay();
@@ -131,28 +111,34 @@ void keyboard(unsigned char key, int x, int y)
     if (key == 27) // 'esc' key
         exit(0);
 
-    unsigned char asciiOffset = 49; // see an ascii table
-    for (unsigned char i = '1'; i < '7'; i++) {
-        if (key == i) {
-            keyStates[i] = true;
-            colors[(i - asciiOffset) * 3 + 0] = 1.0f;
-            colors[(i - asciiOffset) * 3 + 1] = 0.0f;
-            colors[(i - asciiOffset) * 3 + 2] = 0.0f;
-        }
+    if (key == '1') {
+        keyStates['1'] = true;
+        colors[0] = 1.0f;
+        colors[1] = 0.0f;
+        colors[2] = 0.0f;
+    }
+    if (key == '2') {
+        keyStates['2'] = true;
+        colors[3] = 1.0f;
+        colors[4] = 0.0f;
+        colors[5] = 0.0f;
     }
     glutPostRedisplay();
 }
 
 void keyboardUp(unsigned char key, int x, int y)
 {
-    unsigned char asciiOffset = 49; // see an ascii table
-    for (unsigned char i = '1'; i < '7'; i++) {
-        if (key == i) {
-            keyStates[i] = false;
-            colors[(i - asciiOffset) * 3 + 0] = 0.0f;
-            colors[(i - asciiOffset) * 3 + 1] = 0.0f;
-            colors[(i - asciiOffset) * 3 + 2] = 0.0f;
-        }
+    if (key == '1') {
+        keyStates['1'] = false;
+        colors[0] = 0.0f;
+        colors[1] = 0.0f;
+        colors[2] = 0.0f;
+    }
+    if (key == '2') {
+        keyStates['2'] = false;
+        colors[3] = 0.0f;
+        colors[4] = 0.0f;
+        colors[5] = 0.0f;
     }
     glutPostRedisplay();
 }
@@ -172,32 +158,32 @@ void mouse(int button, int state, int x, int y)
 
 void motion(int x, int y)
 {
-    unsigned char asciiOffset = 49; // see an ascii table
 
     curMouse[0] = ((float)x / win_width - 0.5f) * canvas_width;
     curMouse[1] = ((float)(win_height - y) - 0.5f) / win_height * canvas_height;
 
     if (buttonState == GLUT_LEFT_BUTTON) {
-        for (unsigned char i = '1'; i < '7'; i++) {
-            if (keyStates[i]) {
-                translations[(i - asciiOffset) * 2 + 0] += curMouse[0] - preMouse[0];
-                translations[(i - asciiOffset) * 2 + 1] += curMouse[1] - preMouse[1];
-            }
+        if (keyStates['1']) {
+            translations[0] += curMouse[0] - preMouse[0];
+            translations[1] += curMouse[1] - preMouse[1];
         }
-        glutPostRedisplay();
+
+        if (keyStates['2']) {
+            translations[2] += curMouse[0] - preMouse[0];
+            translations[3] += curMouse[1] - preMouse[1];
+        }
     }
 
     else if (buttonState == GLUT_RIGHT_BUTTON) {
-        for (unsigned char i = '1'; i < '7'; i++) {
-            if (keyStates[i]) {
-                rotations[i - asciiOffset] += curMouse[0] - preMouse[0];
-            }
-        }
-        glutPostRedisplay();
+        if (keyStates['1'])
+            rotations[0] += curMouse[0] - preMouse[0];
+        if (keyStates['2'])
+            rotations[1] += curMouse[0] - preMouse[0];
     }
 
     preMouse[0] = curMouse[0];
     preMouse[1] = curMouse[1];
+    glutPostRedisplay();
 
 }
 
@@ -207,7 +193,7 @@ int main(int argc, char* argv[])
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(win_width, win_height);
-    glutCreateWindow("2D transformation Tree");
+    glutCreateWindow("Project 2 Robot");
 
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);

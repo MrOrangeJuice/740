@@ -1,10 +1,1 @@
-﻿  main.cpp
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(56,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(56,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(76,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(83,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(89,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(95,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(103,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(109,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Project2.vcxproj -> C:\Users\parro\Documents\GitHub\740\Project2\Project2\Debug\Project2.exe
+﻿  Project2.vcxproj -> C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Debug\Project2.exe

@@ -1,0 +1,3 @@
+This program allows the user to draw points, lines, triangles, quads, and a polygon, by selecting the desired object under the "Objects" section in the right click menu 
+The user can also change color, point size, and line width (this feature may be broken on some or all machines, I wasn't entirely sure) using the right click menu,
+however color can also be changed by pressing 1 (red), 2 (green), 3 (blue) on the keyboard.

@@ -42,6 +42,7 @@ void init(void)
     color[0] = 1.0f;
     color[1] = color[2] = 0.0f;
     pointSize = 10.0f;
+    lineWidth = 5.0f;
     mode = 1;
 }
 
@@ -104,14 +105,15 @@ void display(void)
         if (i != lines.size() - 2)
         {
             glBegin(GL_LINE_STRIP);
+            glLineWidth(lineWidth);
             shapeColor[0] = lines[i][2];
             shapeColor[1] = lines[i][3];
             shapeColor[2] = lines[i][4];
             glColor3fv(shapeColor);
-            linePos[0] = quads[i][0];
-            linePos[1] = quads[i + 1][0];
+            linePos[0] = lines[i][0];
+            linePos[1] = lines[i + 1][0];
             glVertex2fv(linePos);
-            linePos[0] = quads[i + 2][0];
+            linePos[0] = lines[i + 2][0];
             linePos[1] = lines[i + 3][0];
             glVertex2fv(linePos);
             glEnd();
@@ -119,6 +121,7 @@ void display(void)
         else
         {
             glBegin(GL_LINE_STRIP);
+            glLineWidth(lineWidth);
             shapeColor[0] = lines[i][2];
             shapeColor[1] = lines[i][3];
             shapeColor[2] = lines[i][4];
@@ -182,6 +185,13 @@ void display(void)
                 quadPos2[1] = mousePos[1];
                 glVertex2fv(quadPos);
                 glVertex2fv(quadPos2);
+                glEnd();
+
+                glBegin(GL_LINE_STRIP);
+                shapeColor[0] = quads[i][2];
+                shapeColor[1] = quads[i][3];
+                shapeColor[2] = quads[i][4];
+                glColor3fv(shapeColor);
                 // Line 3 (|)
                 quadPos[0] = quads[i][0];
                 quadPos[1] = quads[i + 1][0];
@@ -209,6 +219,7 @@ void display(void)
         shapeColor[0] = polygon[0][2];
         shapeColor[1] = polygon[0][3];
         shapeColor[2] = polygon[0][4];
+        glColor3fv(shapeColor);
         for (int i = 0; i < polygon.size(); i += 2)
         {
             polyPos[0] = polygon[i][0];
@@ -298,6 +309,22 @@ void motion(int x, int y)
 void keyboard(unsigned char key, int x, int y)
 {
     switch (key) {
+
+    case '1':
+        color[0] = 1.0f;
+        color[1] = 0.0f;
+        color[2] = 0.0f;
+        break;
+    case '2':
+        color[0] = 0.0f;
+        color[1] = 1.0f;
+        color[2] = 0.0f;
+        break;
+    case '3':
+        color[0] = 0.0f;
+        color[1] = 0.0f;
+        color[2] = 1.0f;
+        break;
     case 27:
         exit(0);
         break;
@@ -310,6 +337,9 @@ void menu(int value)
     case 0: // clear
         numOfVertices = 0;
         points.clear();
+        lines.clear();
+        quads.clear();
+        polygon.clear();
         glutPostRedisplay();
         break;
     case 1: //exit
@@ -355,6 +385,15 @@ void menu(int value)
         break;
     case 12:
         pointSize = 20.0f;
+        break;
+    case 13:
+        lineWidth = 1.0f;
+        break;
+    case 14:
+        lineWidth = 5.0f;
+        break;
+    case 15:
+        lineWidth = 10.0f;
         break;
     default:
         break;

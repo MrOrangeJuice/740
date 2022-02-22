@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <vector>
 using namespace std;
 
 int win_width = 600, win_height = 600;
@@ -24,50 +25,108 @@ float rotations[2];
 float curMouse[2];
 float preMouse[2];
 
+class Quad
+{
+    private:
+        float left;
+        float right;
+        float top;
+        float bottom;
+        float color[3];
+        float lineWidth;
+        float rotation;
+        int level;
+    public:
+        Quad(float left, float right, float top, float bottom, float colorr, float colorg, float colorb, float lineWidth, int id)
+        {
+            this->left = left;
+            this->right = right;
+            this->top = top;
+            this->bottom = bottom;
+            this->color[0] = colorr;
+            this->color[1] = colorg;
+            this->color[2] = colorb;
+            this->lineWidth = lineWidth;
+            this->level = id;
+            this->rotation = 0.0f;
+        }
+        void Draw()
+        {
+            glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+            glColor3fv(color);
+            glLineWidth(3.0f);
+            glBegin(GL_LINE_LOOP);
+            glVertex2f(left, bottom);
+            glVertex2f(left, top);
+            glVertex2f(right, top);
+            glVertex2f(right, bottom);
+            glEnd();
+            glLineWidth(1.0f);
+        }
+        void Rotate(float newRotation)
+        {
+            this->rotation += newRotation;
+        }
+        int GetLevel()
+        {
+            return level;
+        }
+};
+
+vector<Quad> quadVector;
+
 void init(void)
 {
     for (int i = 0; i < 256; i++) {
         keyStates[i] = false;
     }
 
-    // color of the first quad
-    colors[0] = 0.0f; // red
-    colors[1] = 0.0f; // green
-    colors[2] = 0.0f; // blue
+    Quad torso = Quad(-2, 2, 2, 0, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad chest = Quad(-2.5f, 2.5f, 4.5f, 2, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad neck = Quad(-0.5f, 0.5f, 6, 4.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad head = Quad(-1.5f, 1.5f, 9, 6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
 
-    // color of the second quad
-    colors[3] = 0.0f; // red
-    colors[4] = 0.0f; // green
-    colors[5] = 1.0f; // blue
+    // Left Arm
+    Quad leftArm = Quad(-4.5f, -2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftForeArm = Quad(-6.5f, -4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftHand = Quad(-8, -6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
 
-    // translation of the first quad
-    translations[0] = 0.0f; // x
-    translations[1] = 0.0f; // y
+    // Right Arm
+    Quad rightArm = Quad(4.5f, 2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightForeArm = Quad(6.5f, 4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightHand = Quad(8, 6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
 
-    // translation of the second quad
-    translations[2] = 5.0f; // x
-    translations[3] = 0.0f; // y
+    // Left Leg
+    Quad leftThigh = Quad(-2, -1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftLeg = Quad(-2, -1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftFoot = Quad(-4, -1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
 
-    // rotaion of the first quad
-    rotations[0] = 0.0f;
+    // Right Leg
+    Quad rightThigh = Quad(2, 1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightLeg = Quad(2, 1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightFoot = Quad(4, 1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
 
-    // rotation of the second quad
-    rotations[1] = 0.0f;
+    quadVector.push_back(torso);
+    quadVector.push_back(chest);
+    quadVector.push_back(neck);
+    quadVector.push_back(head);
 
-    buttonState = -1; // no mouse button
-}
+    quadVector.push_back(leftArm);
+    quadVector.push_back(leftForeArm);
+    quadVector.push_back(leftHand);
 
-void drawQuad(float left, float right, float top, float bottom, float* color)
-{
-    glColor3fv(color);
-    glLineWidth(3.0f);
-    glBegin(GL_LINE_LOOP);
-    glVertex2f(left, bottom);
-    glVertex2f(left, top);
-    glVertex2f(right, top);
-    glVertex2f(right, bottom);
-    glEnd();
-    glLineWidth(1.0f);
+    quadVector.push_back(rightArm);
+    quadVector.push_back(rightForeArm);
+    quadVector.push_back(rightHand);
+
+    quadVector.push_back(leftThigh);
+    quadVector.push_back(leftLeg);
+    quadVector.push_back(leftFoot);
+    
+    quadVector.push_back(rightThigh);
+    quadVector.push_back(rightLeg);
+    quadVector.push_back(rightFoot);
+
 }
 
 void display(void)
@@ -78,16 +137,10 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // transform the first quad // (-3, -3) and (3, 3)
-    glTranslatef(translations[0], translations[1], 0.0f);
-    glRotatef(rotations[0], 0.0f, 0.0f, 1.0f);
-    drawQuad(-3, 3, 3, -3, colors);
-
-    // transform the second quad // (4, -1) and (5, 1)
-    glTranslatef(translations[2], translations[3], 0.0f);
-    glRotatef(rotations[1], 0.0f, 0.0f, 1.0f);
-    drawQuad(4, 5, 1, -1, colors + 3);
-
+    for (int i = 0; i < quadVector.size(); i++)
+    {
+        quadVector[i].Draw();
+    }
 
     glutSwapBuffers();
 }
@@ -111,80 +164,12 @@ void keyboard(unsigned char key, int x, int y)
     if (key == 27) // 'esc' key
         exit(0);
 
-    if (key == '1') {
-        keyStates['1'] = true;
-        colors[0] = 1.0f;
-        colors[1] = 0.0f;
-        colors[2] = 0.0f;
-    }
-    if (key == '2') {
-        keyStates['2'] = true;
-        colors[3] = 1.0f;
-        colors[4] = 0.0f;
-        colors[5] = 0.0f;
-    }
     glutPostRedisplay();
 }
 
 void keyboardUp(unsigned char key, int x, int y)
 {
-    if (key == '1') {
-        keyStates['1'] = false;
-        colors[0] = 0.0f;
-        colors[1] = 0.0f;
-        colors[2] = 0.0f;
-    }
-    if (key == '2') {
-        keyStates['2'] = false;
-        colors[3] = 0.0f;
-        colors[4] = 0.0f;
-        colors[5] = 0.0f;
-    }
     glutPostRedisplay();
-}
-
-void mouse(int button, int state, int x, int y)
-{
-    if (state == GLUT_DOWN) {
-        buttonState = button;
-        curMouse[0] = ((float)x / win_width - 0.5f) * canvas_width;
-        curMouse[1] = ((float)(win_height - y) - 0.5f) / win_height * canvas_height;
-        preMouse[0] = ((float)x / win_width - 0.5f) * canvas_width;
-        preMouse[1] = ((float)(win_height - y) - 0.5f) / win_height * canvas_height;
-    }
-    else if (state == GLUT_UP)
-        button = -1;
-}
-
-void motion(int x, int y)
-{
-
-    curMouse[0] = ((float)x / win_width - 0.5f) * canvas_width;
-    curMouse[1] = ((float)(win_height - y) - 0.5f) / win_height * canvas_height;
-
-    if (buttonState == GLUT_LEFT_BUTTON) {
-        if (keyStates['1']) {
-            translations[0] += curMouse[0] - preMouse[0];
-            translations[1] += curMouse[1] - preMouse[1];
-        }
-
-        if (keyStates['2']) {
-            translations[2] += curMouse[0] - preMouse[0];
-            translations[3] += curMouse[1] - preMouse[1];
-        }
-    }
-
-    else if (buttonState == GLUT_RIGHT_BUTTON) {
-        if (keyStates['1'])
-            rotations[0] += curMouse[0] - preMouse[0];
-        if (keyStates['2'])
-            rotations[1] += curMouse[0] - preMouse[0];
-    }
-
-    preMouse[0] = curMouse[0];
-    preMouse[1] = curMouse[1];
-    glutPostRedisplay();
-
 }
 
 int main(int argc, char* argv[])
@@ -199,8 +184,6 @@ int main(int argc, char* argv[])
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
     glutKeyboardUpFunc(keyboardUp);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
     glutMainLoop();
     return 0;
 

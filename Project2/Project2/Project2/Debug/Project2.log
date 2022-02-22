@@ -1,3 +1,6 @@
 ﻿  main.cpp
-C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(140,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(174,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(217,82): warning C4018: '>': signed/unsigned mismatch
+C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(246,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Project2\main.cpp(252,27): warning C4018: '<': signed/unsigned mismatch
   Project2.vcxproj -> C:\Users\BigBertha\Documents\GitHub\740\Project2\Project2\Debug\Project2.exe

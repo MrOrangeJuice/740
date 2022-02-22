@@ -1,0 +1,5 @@
+Use A and D to rotate the robot, I and K to move up and down the tranformation tree, and J and L to cycle between children
+
+KNOWN ISSUES:
+Program will crash if user tries to cycle children on top level parent
+Rotation applies to whole robot and doesn't really work correctly

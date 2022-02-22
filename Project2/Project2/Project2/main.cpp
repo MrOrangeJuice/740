@@ -25,6 +25,9 @@ float rotations[2];
 float curMouse[2];
 float preMouse[2];
 
+int current;
+int currentChild = 0;
+
 class Quad
 {
     private:
@@ -36,8 +39,13 @@ class Quad
         float lineWidth;
         float rotation;
         int level;
+        int parent;
+        vector<int> children;
+        float centerx;
+        float centery;
+        int id;
     public:
-        Quad(float left, float right, float top, float bottom, float colorr, float colorg, float colorb, float lineWidth, int id)
+        Quad(float left, float right, float top, float bottom, float colorr, float colorg, float colorb, float lineWidth, int level, int parent, int id, vector<int> children = {})
         {
             this->left = left;
             this->right = right;
@@ -47,13 +55,29 @@ class Quad
             this->color[1] = colorg;
             this->color[2] = colorb;
             this->lineWidth = lineWidth;
-            this->level = id;
+            this->level = level;
             this->rotation = 0.0f;
+            this->centerx = (this->right - this->left) / 2;
+            this->centery = (this->top - this->bottom) / 2;
+            this->parent = parent;
+            this->children = children;
+            this->id = id;
         }
         void Draw()
         {
+            glTranslatef(-centerx, -centery, 0.0f);
             glRotatef(rotation, 0.0f, 0.0f, 1.0f);
-            glColor3fv(color);
+            glTranslatef(centerx, centery, 0.0f);
+            if (current == id)
+            {
+                color[0] = 1.0f;
+                glColor3fv(color);
+            }
+            else
+            {
+                color[0] = 0.0f;
+                glColor3fv(color);
+            }
             glLineWidth(3.0f);
             glBegin(GL_LINE_LOOP);
             glVertex2f(left, bottom);
@@ -71,6 +95,14 @@ class Quad
         {
             return level;
         }
+        int GetParent()
+        {
+            return parent;
+        }
+        vector<int> GetChildren()
+        {
+            return children;
+        }
 };
 
 vector<Quad> quadVector;
@@ -81,30 +113,32 @@ void init(void)
         keyStates[i] = false;
     }
 
-    Quad torso = Quad(-2, 2, 2, 0, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad chest = Quad(-2.5f, 2.5f, 4.5f, 2, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad neck = Quad(-0.5f, 0.5f, 6, 4.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad head = Quad(-1.5f, 1.5f, 9, 6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    current = 0;
+
+    Quad torso = Quad(-2, 2, 2, 0, 0.0f, 0.0f, 0.0f, 3.0f, 0, -1, 0, {1,10,13});
+    Quad chest = Quad(-2.5f, 2.5f, 4.5f, 2, 0.0f, 0.0f, 0.0f, 3.0f, 1, 0, 1, {2,4,7});
+    Quad neck = Quad(-0.5f, 0.5f, 6, 4.5f, 0.0f, 0.0f, 0.0f, 3.0f, 2, 1, 2, {3});
+    Quad head = Quad(-1.5f, 1.5f, 9, 6, 0.0f, 0.0f, 0.0f, 3.0f, 3, 2, 3);
 
     // Left Arm
-    Quad leftArm = Quad(-4.5f, -2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad leftForeArm = Quad(-6.5f, -4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad leftHand = Quad(-8, -6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftArm = Quad(-4.5f, -2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 2, 1, 4, {5});
+    Quad leftForeArm = Quad(-6.5f, -4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 3, 2, 5, {6});
+    Quad leftHand = Quad(-8, -6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 4, 3, 6);
 
     // Right Arm
-    Quad rightArm = Quad(4.5f, 2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad rightForeArm = Quad(6.5f, 4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad rightHand = Quad(8, 6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightArm = Quad(4.5f, 2.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 2, 1, 7, {8});
+    Quad rightForeArm = Quad(6.5f, 4.5f, 4, 2.5f, 0.0f, 0.0f, 0.0f, 3.0f, 3, 2, 8, {9});
+    Quad rightHand = Quad(8, 6.5f, 4.25f, 2.25f, 0.0f, 0.0f, 0.0f, 3.0f, 4, 3, 9);
 
     // Left Leg
-    Quad leftThigh = Quad(-2, -1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad leftLeg = Quad(-2, -1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad leftFoot = Quad(-4, -1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad leftThigh = Quad(-2, -1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 1, 0, 10, {11});
+    Quad leftLeg = Quad(-2, -1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 2, 1, 11, {12});
+    Quad leftFoot = Quad(-4, -1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 3, 2, 12);
 
     // Right Leg
-    Quad rightThigh = Quad(2, 1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad rightLeg = Quad(2, 1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 0);
-    Quad rightFoot = Quad(4, 1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 0);
+    Quad rightThigh = Quad(2, 1, 0, -3, 0.0f, 0.0f, 0.0f, 3.0f, 1, 0, 13, {14});
+    Quad rightLeg = Quad(2, 1, -3, -6, 0.0f, 0.0f, 0.0f, 3.0f, 2, 1, 14, {15});
+    Quad rightFoot = Quad(4, 1, -6, -7.5f, 0.0f, 0.0f, 0.0f, 3.0f, 3, 2, 15);
 
     quadVector.push_back(torso);
     quadVector.push_back(chest);
@@ -163,6 +197,63 @@ void keyboard(unsigned char key, int x, int y)
 {
     if (key == 27) // 'esc' key
         exit(0);
+
+    if (key == 'i')
+    {
+        if (quadVector[current].GetChildren().size() != 0) current = quadVector[current].GetChildren()[0];
+        currentChild = 0;
+    }
+
+    if (key == 'k')
+    {
+        if(quadVector[current].GetParent() != -1) current = quadVector[current].GetParent();
+        currentChild = 0;
+    }
+
+    if (key == 'l')
+    {
+    {
+        if (quadVector[current].GetChildren().size() != 0)
+        { 
+            if (quadVector[quadVector[current].GetParent()].GetChildren().size() > currentChild + 1)
+            {
+                currentChild++;
+            }
+            else
+            {
+                currentChild = 0;
+            }
+            current = quadVector[quadVector[current].GetParent()].GetChildren()[currentChild];
+        }
+    }
+
+    if (key == 'j')
+    {
+        if (quadVector[current].GetChildren().size() != 0)
+        {
+            if (currentChild > 0)
+            {
+                currentChild--;
+            }
+            else
+            {
+                currentChild = quadVector[quadVector[current].GetParent()].GetChildren().size() - 1;
+            }
+            current = quadVector[quadVector[current].GetParent()].GetChildren()[currentChild];
+        }
+    }
+
+    if (key == 'a')
+        for (int i = 0; i < quadVector.size(); i++)
+        {
+            quadVector[i].Rotate(1.0f);
+        }
+
+    if (key == 'd')
+        for (int i = 0; i < quadVector.size(); i++)
+        {
+            quadVector[i].Rotate(-1.0f);
+        }
 
     glutPostRedisplay();
 }

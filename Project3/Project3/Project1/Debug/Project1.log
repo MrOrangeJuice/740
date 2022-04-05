@@ -1,0 +1,22 @@
+﻿  Camera.cpp
+  main.cpp
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: rotate_slow function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspectiveFov function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: infinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: tweakedInfinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: roll function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: pitch function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: yaw function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+C:\Users\BigBertha\Documents\GitHub\740\Project3\src\main.cpp(177,32): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Users\BigBertha\Documents\GitHub\740\Project3\src\main.cpp(180,32): warning C4305: '-=': truncation from 'double' to 'float'
+  Mesh.cpp
+  ShaderClass.cpp
+C:\Users\BigBertha\Documents\GitHub\740\Project3\src\ShaderClass.cpp(85,20): warning C4244: 'initializing': conversion from 'std::streamoff' to 'unsigned long', possible loss of data
+  ShaderProgram.cpp
+  Generating Code...
+  Project1.vcxproj -> C:\Users\BigBertha\Documents\GitHub\740\Project3\Project1\Debug\Project1.exe

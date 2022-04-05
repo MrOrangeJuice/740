@@ -1,0 +1,5 @@
+Use 1 and 2 to swap between lights
+
+Use WS to move selected light on Y axis
+Use AD to move selected light on X axis
+Use UJ to move selected light on Z axis

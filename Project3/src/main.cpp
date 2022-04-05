@@ -36,32 +36,38 @@ int g_winHeight = 512;
 Camera g_cam;
 Text g_text;
 
+int activeLight = 1;
+
 unsigned char g_keyStates[256];
 
 char v_shader_file[] =
-".\\shaders\\basic.vert";
+//".\\shaders\\basic.vert";
 //".\\shaders\\displacement.vert"; // vertex displacement shader with perlin noise
-//".\\shaders\\perVert_lambert.vert"; // basic lambert lighting  
+".\\shaders\\perVert_lambert.vert"; // basic lambert lighting  
 // ".\\shaders\\perFrag_lambert.vert"; // basic lambert lighting with per-fragment implementation
 // ".\\shaders\\toon_shading.vert"; // basic toon shading with per-fragment implementation
 
 char f_shader_file[] =
-".\\shaders\\basic.frag";
+// ".\\shaders\\basic.frag";
 // ".\\shaders\\displacement.frag"; // vertex displacement shader with perlin noise
-// ".\\shaders\\perVert_lambert.frag"; // basic lambert shading 
+ ".\\shaders\\perVert_lambert.frag"; // basic lambert shading 
 // ".\\shaders\\perFrag_lambert.frag"; // basic lambert shading with per-fragment implementation
 // ".\\shaders\\toon_shading.frag"; // basic toon shading with per-fragment implementation
 
 const char meshFile[128] = 
 //"Mesh/sphere.obj";
 //"Mesh/bunny2K.obj";
-//"Mesh/teapot.obj";
-"Mesh/teddy.obj";
+"Mesh/teapot.obj";
+//"Mesh/teddy.obj";
 
 Mesh g_mesh;
+Mesh g_mesh2;
 
 vec3 g_lightPos = vec3(3, 3, 3);
 float g_time = 0.0f;
+
+vec3 lightPos1 = vec3(3, 3, 3);
+vec3 lightPos2 = vec3(1, 0, -2);
 
 void initialization() 
 {    
@@ -69,6 +75,7 @@ void initialization()
 	g_text.setColor(0.0f, 0.0f, 0.0f);
 
 	g_mesh.create(meshFile, v_shader_file, f_shader_file);
+	g_mesh2.create(meshFile, v_shader_file, f_shader_file);
 	// add any stuff you want to initialize ...
 }
 
@@ -111,6 +118,35 @@ void display()
     g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
     g_cam.drawCoordinate();
 
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	// Draw sphere 1
+	// Draw red if currently active
+	if (activeLight == 1)
+	{
+		glColor3f(1.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		glColor3f(0.0f, 0.0f, 0.0f);
+	}
+	glTranslatef(lightPos1.x,lightPos1.y,lightPos1.z);
+	glutWireSphere(2.0f,8.0f,8.0f);
+	glPopMatrix();
+
+	// Draw sphere 2
+	if (activeLight == 2)
+	{
+		glColor3f(1.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		glColor3f(0.0f, 0.0f, 0.0f);
+	}
+	glTranslatef(lightPos2.x, lightPos2.y, lightPos2.z);
+	glutWireSphere(2.0f, 8.0f, 8.0f);
+
 	// display the text
 	string str;
 	if(g_cam.isFocusMode()) {
@@ -127,7 +163,15 @@ void display()
 		
 
 	g_time = (float)glutGet(GLUT_ELAPSED_TIME)/1000.0f;
+	g_mesh.vertices[0].x += 0.01f;
+
+	mat4 m = translate(mat4(1.0), vec3(0.0f, 1.0f, 0.0f));
+	g_mesh.modelMat = scale(m, vec3(0.3f, 0.3f, 0.3f));
 	g_mesh.draw(g_cam.viewMat, g_cam.projMat, g_lightPos, g_time);
+
+	m = translate(mat4(1.0), vec3(0.0f, 2.0f, 0.0f));
+	g_mesh2.modelMat = scale(m, vec3(0.3f, 0.3f, 0.3f));
+	g_mesh2.draw(g_cam.viewMat, g_cam.projMat, g_lightPos, g_time);
 
     glutSwapBuffers();
 }
@@ -178,6 +222,44 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case'-':
 			g_mesh.normal_offset -= 0.01;
+		case '1':
+			activeLight = 1;
+			break;
+		case '2':
+			activeLight = 2;
+			break;
+		case 'w':
+			if(activeLight == 1) lightPos1.y += 0.1f;
+			if(activeLight == 2) lightPos2.y += 0.1f;
+			break;
+		case 's':
+			if(activeLight == 1) lightPos1.y -= 0.1f;
+			if(activeLight == 2) lightPos2.y -= 0.1f;
+			break;
+		case 'a':
+			if (activeLight == 1) lightPos1.x -= 0.1f;
+			if (activeLight == 2) lightPos2.x -= 0.1f;
+			break;
+		case 'd':
+			if (activeLight == 1) lightPos1.x += 0.1f;
+			if (activeLight == 2) lightPos2.x += 0.1f;
+			break;
+		case 'u':
+			if (activeLight == 1) lightPos1.z += 0.1f;
+			if (activeLight == 2) lightPos2.z += 0.1f;
+			break;
+		case 'j':
+			if (activeLight == 1) lightPos1.z -= 0.1f;
+			if (activeLight == 2) lightPos2.z -= 0.1f;
+			break;
+	}
+	if (activeLight == 1)
+	{
+		g_lightPos = lightPos1;
+	}
+	if (activeLight == 2)
+	{
+		g_lightPos = lightPos2;
 	}
 }
 
@@ -187,7 +269,7 @@ int main(int argc, char **argv)
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(g_winWidth, g_winHeight);
     glutInitWindowPosition(0, 0);
-    glutCreateWindow("VertFrag Shader Example");
+    glutCreateWindow("Assignment 3");
 	
 	glewInit();
 	initialGL();

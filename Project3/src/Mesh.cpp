@@ -193,8 +193,6 @@ void Mesh::draw(mat4 viewMat, mat4 projMat, vec3 lightPos, float time) {
 
 
 	glUseProgram(shaderProg.id);
-	mat4 m = translate(mat4(1.0), vec3(0.0f, 2.0f, 0.0f));
-	modelMat = scale(m, vec3(0.3f, 0.3f, 0.3f));
 	shaderProg.setMatrix4fv("modelMat", 1, value_ptr(modelMat));
 	shaderProg.setMatrix4fv("viewMat", 1, value_ptr(viewMat));
 	shaderProg.setMatrix4fv("projMat", 1, value_ptr(projMat));

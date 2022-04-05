@@ -34,9 +34,11 @@ char v_shader_file[] = ".\\shaders\\v_shader.vert";
 char f_shader_file[] = ".\\shaders\\f_shader.frag";
 char c_shader_file[] = ".\\shaders\\c_shader.comp";
 
+vec3 spherePos = vec3(0.0f,5.0f,-8.0f);
+
 void initialization()
 {
-	parSys.create(20, vec3(-10.0f, -10.0f, -10.0f), vec3(10.0f, 10.0f, 10.0f),
+	parSys.create(2000, vec3(-10.0f, 0.0f, 5.0f), vec3(10.0f, 10.0f, -5.0f),
 		c_shader_file, v_shader_file, f_shader_file);
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
@@ -84,6 +86,21 @@ void display()
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	parSys.draw(15.0f, g_cam.viewMat, g_cam.projMat);
+
+	// Draw point
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(0.0f, 5.0f, 20.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glutSolidSphere(0.3f, 8.0f, 8.0f);
+
+	// Draw sphere
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glTranslatef(spherePos.x, spherePos.y, spherePos.z);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glutSolidSphere(2.0f, 8.0f, 8.0f);
+	glPopMatrix();
 
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
@@ -144,6 +161,24 @@ void keyboard(unsigned char key, int x, int y)
 	case ' ':
 		g_cam.PrintProperty();
 		break;
+	case 'w':
+		spherePos.y += 0.1f;
+		break;
+	case 's':
+		spherePos.y -= 0.1f;
+		break;
+	case 'a':
+		spherePos.x += 0.1f;
+		break;
+	case 'd':
+		spherePos.x -= 0.1f;
+		break;
+	case 'u':
+		spherePos.z += 0.1f;
+		break;
+	case 'j':
+		spherePos.z -= 0.1f;
+		break;
 	}
 }
 
@@ -153,7 +188,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(g_winWidth, g_winHeight);
 	glutInitWindowPosition(0, 0);
-	glutCreateWindow("Compute Shader Example: A Simple particle System");
+	glutCreateWindow("Assignment 4");
 
 	glewInit();
 	initialGL();

@@ -98,6 +98,7 @@ void ParticleSystem::create(unsigned int num_of_particles, vec3 min_point, vec3 
 
 	if (pos_array != NULL)
 	{
+		// Draw grid of particles
 		for (unsigned int i = 0; i < width; i++)
 		{
 			for (unsigned int j = 0; j < height; j++)
@@ -158,7 +159,7 @@ void ParticleSystem::create(unsigned int num_of_particles, vec3 min_point, vec3 
 		{
 			color_array[i].r = 0.0f;
 			color_array[i].g = 0.0f;
-			color_array[i].b = 1.0f;
+			color_array[i].b = 0.5f;
 			color_array[i].a = 1.0f;
 		}
 	}

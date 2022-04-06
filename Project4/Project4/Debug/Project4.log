@@ -1,4 +1,4 @@
-﻿  main.cpp
+﻿  ParticleSystem.cpp
   GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: rotate_slow function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
@@ -11,8 +11,6 @@
   GLM: yaw function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(98,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(98,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(105,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(105,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\ParticleSystem.cpp(102,30): warning C4018: '<': signed/unsigned mismatch
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\ParticleSystem.cpp(104,31): warning C4018: '<': signed/unsigned mismatch
   Project4.vcxproj -> C:\Users\parro\Documents\GitHub\740\Project4\Debug\Project4.exe

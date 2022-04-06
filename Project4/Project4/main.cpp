@@ -38,9 +38,11 @@ vec3 spherePos = vec3(0.0f,5.0f,-8.0f);
 int resW = 64;
 int resH = 32;
 
+float linePos[3];
+
 void initialization()
 {
-	parSys.create((resW * resH), vec3(-10.0f, 0.0f, 0.0f), vec3(10.0f, 10.0f, 0.0f),
+	parSys.create((resW * resH), vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f),
 		c_shader_file, v_shader_file, f_shader_file, resW, resH);
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
@@ -97,6 +99,8 @@ void display()
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glutSolidSphere(0.3f, 8.0f, 8.0f);
 
+	glTranslatef(0.0f, -5.0f, -20.0f);
+
 	// Draw sphere
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -105,6 +109,53 @@ void display()
 	glutSolidSphere(2.0f, 8.0f, 8.0f);
 	glPopMatrix();
 
+	// Draw lines
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	// Line 1
+	glBegin(GL_LINE_STRIP);
+	linePos[0] = 0.0f;
+	linePos[1] = 5.0f;
+	linePos[2] = 20.0f;
+	glVertex3fv(linePos);
+	linePos[0] = 10.0f;
+	linePos[1] = 10.0f;
+	linePos[2] = -5.0f;
+	glVertex3fv(linePos);
+
+	// Line 2
+	glBegin(GL_LINE_STRIP);
+	linePos[0] = 0.0f;
+	linePos[1] = 5.0f;
+	linePos[2] = 20.0f;
+	glVertex3fv(linePos);
+	linePos[0] = 10.0f;
+	linePos[1] = 0.0f;
+	linePos[2] = -5.0f;
+	glVertex3fv(linePos);
+	glEnd();
+
+	// Line 3
+	glBegin(GL_LINE_STRIP);
+	linePos[0] = 0.0f;
+	linePos[1] = 5.0f;
+	linePos[2] = 20.0f;
+	glVertex3fv(linePos);
+	linePos[0] = -10.0f;
+	linePos[1] = 10.0f;
+	linePos[2] = -5.0f;
+	glVertex3fv(linePos);
+
+	// Line 4
+	glBegin(GL_LINE_STRIP);
+	linePos[0] = 0.0f;
+	linePos[1] = 5.0f;
+	linePos[2] = 20.0f;
+	glVertex3fv(linePos);
+	linePos[0] = -10.0f;
+	linePos[1] = 0.0f;
+	linePos[2] = -5.0f;
+	glVertex3fv(linePos);
 
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);
@@ -182,6 +233,24 @@ void keyboard(unsigned char key, int x, int y)
 		break;
 	case 'j':
 		spherePos.z -= 0.1f;
+		break;
+	case '+':
+		if (resW < 8192 && resH < 4096)
+		{
+			resW *= 2;
+			resH *= 2;
+			parSys.create((resW * resH), vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f),
+				c_shader_file, v_shader_file, f_shader_file, resW, resH);
+		}
+		break;
+	case '-':
+		if (resW > 16 && resH > 8)
+		{
+			resW /= 2;
+			resH /= 2;
+			parSys.create((resW * resH), vec3(-10.0f, 0.0f, -5.0f), vec3(10.0f, 10.0f, -5.0f),
+				c_shader_file, v_shader_file, f_shader_file, resW, resH);
+		}
 		break;
 	}
 }

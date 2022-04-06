@@ -1,73 +1,11 @@
-﻿  main.cpp
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: rotate_slow function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: perspectiveFov function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: infinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: tweakedInfinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: roll function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: pitch function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: yaw function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-  GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-Camera.obj : error LNK2019: unresolved external symbol __imp_glutPostRedisplay referenced in function "public: void __cdecl Camera::keyOperation(unsigned char const * const,int,int)" (?keyOperation@Camera@@QEAAXQEBEHH@Z)
-main.obj : error LNK2001: unresolved external symbol __imp_glutPostRedisplay
-Camera.obj : error LNK2019: unresolved external symbol __imp_glutGetModifiers referenced in function "public: void __cdecl Camera::mouseClick(int,int,int,int,int,int)" (?mouseClick@Camera@@QEAAXHHHHHH@Z)
-Camera.obj : error LNK2019: unresolved external symbol __imp___glewUseProgram referenced in function "public: void __cdecl Camera::drawCoordinate(void)" (?drawCoordinate@Camera@@QEAAXXZ)
-main.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
-ParticleSystem.obj : error LNK2001: unresolved external symbol __imp___glewUseProgram
-main.obj : error LNK2019: unresolved external symbol __imp_glewInit referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutInitWindowPosition referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutInitWindowSize referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutInitDisplayMode referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutMainLoop referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutSwapBuffers referenced in function "void __cdecl display(void)" (?display@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol __imp_glutIdleFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutKeyboardFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutReshapeFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutDisplayFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutMouseFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutMotionFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutKeyboardUpFunc referenced in function main
-main.obj : error LNK2019: unresolved external symbol __imp_glutGet referenced in function "void __cdecl idle(void)" (?idle@@YAXXZ)
-main.obj : error LNK2019: unresolved external symbol __imp_glutBitmapCharacter referenced in function "public: void __cdecl Text::draw(float,float,char *,int,int,int)" (?draw@Text@@QEAAXMMPEADHHH@Z)
-main.obj : error LNK2019: unresolved external symbol __imp_glutBitmapWidth referenced in function "public: void __cdecl Text::draw(float,float,char *,int,int,int)" (?draw@Text@@QEAAXMMPEADHHH@Z)
-main.obj : error LNK2019: unresolved external symbol __imp___glutInitWithExit referenced in function glutInit_ATEXIT_HACK
-main.obj : error LNK2019: unresolved external symbol __imp___glutCreateWindowWithExit referenced in function glutCreateWindow_ATEXIT_HACK
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewBindBuffer referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewBufferData referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewGenBuffers referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewUnmapBuffer referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewEnableVertexAttribArray referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewVertexAttribPointer referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewDispatchCompute referenced in function "public: void __cdecl ParticleSystem::update(float)" (?update@ParticleSystem@@QEAAXM@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewMapBufferRange referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewMemoryBarrier referenced in function "public: void __cdecl ParticleSystem::update(float)" (?update@ParticleSystem@@QEAAXM@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewBindBufferBase referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewBindVertexArray referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ParticleSystem.obj : error LNK2019: unresolved external symbol __imp___glewGenVertexArrays referenced in function "public: void __cdecl ParticleSystem::create(unsigned int,struct glm::detail::tvec3<float,0>,struct glm::detail::tvec3<float,0>,char const *,char const *,char const *)" (?create@ParticleSystem@@QEAAXIU?$tvec3@M$0A@@detail@glm@@0PEBD11@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewCompileShader referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewCreateProgram referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderProgram.obj : error LNK2001: unresolved external symbol __imp___glewCreateProgram
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewCreateShader referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewDeleteShader referenced in function "public: void __cdecl ShaderClass::destroy(void)" (?destroy@ShaderClass@@QEAAXXZ)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewGetShaderInfoLog referenced in function "private: void __cdecl ShaderClass::printShaderInfoLog(unsigned int)" (?printShaderInfoLog@ShaderClass@@AEAAXI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewGetShaderiv referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___glewShaderSource referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___GLEW_ARB_fragment_shader referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderClass.obj : error LNK2019: unresolved external symbol __imp___GLEW_ARB_vertex_shader referenced in function "public: void __cdecl ShaderClass::create(char const *,unsigned int)" (?create@ShaderClass@@QEAAXPEBDI@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewActiveTexture referenced in function "public: void __cdecl ShaderProgram::createDataTexture(unsigned int &,float *,unsigned int,unsigned int)" (?createDataTexture@ShaderProgram@@QEAAXAEAIPEAMII@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewAttachShader referenced in function "public: void __cdecl ShaderProgram::link(class ShaderClass)" (?link@ShaderProgram@@QEAAXVShaderClass@@@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewGetProgramInfoLog referenced in function "private: void __cdecl ShaderProgram::printProgramInfoLog(unsigned int)" (?printProgramInfoLog@ShaderProgram@@AEAAXI@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewGetProgramiv referenced in function "public: void __cdecl ShaderProgram::link(class ShaderClass)" (?link@ShaderProgram@@QEAAXVShaderClass@@@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewGetUniformLocation referenced in function "public: void __cdecl ShaderProgram::setFloat1V(char const *,unsigned int,float const *)" (?setFloat1V@ShaderProgram@@QEAAXPEBDIPEBM@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewLinkProgram referenced in function "public: void __cdecl ShaderProgram::link(class ShaderClass)" (?link@ShaderProgram@@QEAAXVShaderClass@@@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewUniform1f referenced in function "public: void __cdecl ShaderProgram::setFloat(char const *,float)" (?setFloat@ShaderProgram@@QEAAXPEBDM@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewUniform1fv referenced in function "public: void __cdecl ShaderProgram::setFloat1V(char const *,unsigned int,float const *)" (?setFloat1V@ShaderProgram@@QEAAXPEBDIPEBM@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewUniform1i referenced in function "public: void __cdecl ShaderProgram::setInt(char const *,int)" (?setInt@ShaderProgram@@QEAAXPEBDH@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewUniform3fv referenced in function "public: void __cdecl ShaderProgram::setFloat3V(char const *,unsigned int,float const *)" (?setFloat3V@ShaderProgram@@QEAAXPEBDIPEBM@Z)
-ShaderProgram.obj : error LNK2019: unresolved external symbol __imp___glewUniformMatrix4fv referenced in function "public: void __cdecl ShaderProgram::setMatrix4fv(char const *,unsigned int,float const *)" (?setMatrix4fv@ShaderProgram@@QEAAXPEBDIPEBM@Z)
-C:\Users\BigBertha\Documents\GitHub\740\MyLib\lib\x32\glew32.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
-C:\Users\BigBertha\Documents\GitHub\740\MyLib\lib\x32\freeglut.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
-C:\Users\BigBertha\Documents\GitHub\740\Project4\x64\Debug\Project4.exe : fatal error LNK1120: 53 unresolved externals
+﻿  Camera.cpp
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\Camera.cpp(1,10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  main.cpp
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(1,10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  ParticleSystem.cpp
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\ParticleSystem.cpp(1,10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  ShaderClass.cpp
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\ShaderClass.h(4,10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  ShaderProgram.cpp
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\ShaderProgram.h(4,10): fatal error C1083: Cannot open include file: 'GL/glew.h': No such file or directory
+  Generating Code...

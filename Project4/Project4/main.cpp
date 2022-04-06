@@ -35,11 +35,13 @@ char f_shader_file[] = ".\\shaders\\f_shader.frag";
 char c_shader_file[] = ".\\shaders\\c_shader.comp";
 
 vec3 spherePos = vec3(0.0f,5.0f,-8.0f);
+int resW = 64;
+int resH = 32;
 
 void initialization()
 {
-	parSys.create(2000, vec3(-10.0f, 0.0f, 5.0f), vec3(10.0f, 10.0f, -5.0f),
-		c_shader_file, v_shader_file, f_shader_file);
+	parSys.create((resW * resH), vec3(-10.0f, 0.0f, 0.0f), vec3(10.0f, 10.0f, 0.0f),
+		c_shader_file, v_shader_file, f_shader_file, resW, resH);
 
 	g_cam.set(38.0f, 13.0f, 4.0f, 0.0f, 0.0f, 0.0f, g_winWidth, g_winHeight, 45.0f, 0.01f, 10000.0f);
 	g_text.setColor(0.0f, 0.0f, 0.0f);
@@ -85,9 +87,10 @@ void display()
 	glUseProgram(0);
 	glDisable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
-	parSys.draw(15.0f, g_cam.viewMat, g_cam.projMat);
+	parSys.draw(1.0f, g_cam.viewMat, g_cam.projMat);
 
 	// Draw point
+	glUseProgram(0);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glTranslatef(0.0f, 5.0f, 20.0f);
@@ -101,6 +104,7 @@ void display()
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glutSolidSphere(2.0f, 8.0f, 8.0f);
 	glPopMatrix();
+
 
 	g_cam.drawGrid();
 	g_cam.drawCoordinateOnScreen(g_winWidth, g_winHeight);

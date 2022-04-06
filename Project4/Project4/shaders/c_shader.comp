@@ -35,6 +35,8 @@ void main()
 	vec3 pos = Positions[g_id].xyz;
 	vec3 dir = Directions[g_id].xyz;
 	float speed = Speeds[g_id];
+	
+	speed = 0;
 
 	pos += dir * speed * deltaT;
 

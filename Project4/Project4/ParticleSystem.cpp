@@ -53,7 +53,7 @@ float ParticleSystem::randomf(float min, float max)
 }
 
 void ParticleSystem::create(unsigned int num_of_particles, vec3 min_point, vec3 max_point,
-	const char* compute_shader_file, const char* vertex_shader_file, const char* fragment_shader_file)
+	const char* compute_shader_file, const char* vertex_shader_file, const char* fragment_shader_file, int width, int height)
 {
 	if (num_of_particles <= 0) {
 		cout << "The particle system wasn't created!" << endl;
@@ -98,12 +98,15 @@ void ParticleSystem::create(unsigned int num_of_particles, vec3 min_point, vec3 
 
 	if (pos_array != NULL)
 	{
-		for (unsigned int i = 0; i < num; i++)
+		for (unsigned int i = 0; i < width; i++)
 		{
-			pos_array[i].x = randomf(size_min_point.x, size_max_point.x);
-			pos_array[i].y = randomf(size_min_point.y, size_max_point.y);
-			pos_array[i].z = randomf(size_min_point.z, size_max_point.z);
-			pos_array[i].w = 1.0f;
+			for (unsigned int j = 0; j < height; j++)
+			{
+				pos_array[(i * height) + j].x = size_min_point.x + (((size_max_point.x - size_min_point.x)/width) * i);
+				pos_array[(i * height) + j].y = size_min_point.y + (((size_max_point.y - size_min_point.y) / height)* j);
+				pos_array[(i * height) + j].z = 0.0f;
+				pos_array[(i * height) + j].w = 1.0f;
+			}
 		}
 	}
 	glUnmapBuffer(GL_SHADER_STORAGE_BUFFER);
@@ -153,9 +156,9 @@ void ParticleSystem::create(unsigned int num_of_particles, vec3 min_point, vec3 
 	{
 		for (unsigned int i = 0; i < num; i++)
 		{
-			color_array[i].r = randomf(0.0f, 1.0f);
-			color_array[i].g = randomf(0.0f, 1.0f);
-			color_array[i].b = randomf(0.0f, 1.0f);
+			color_array[i].r = 0.0f;
+			color_array[i].g = 0.0f;
+			color_array[i].b = 1.0f;
 			color_array[i].a = 1.0f;
 		}
 	}

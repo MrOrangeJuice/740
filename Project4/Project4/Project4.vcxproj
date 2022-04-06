@@ -102,12 +102,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\BigBertha\Documents\GitHub\740\MyLib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\parro\Documents\GitHub\740\MyLib\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\BigBertha\Documents\GitHub\740\MyLib\lib\x32</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\parro\Documents\GitHub\740\MyLib\lib\x32</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

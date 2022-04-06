@@ -11,8 +11,8 @@
   GLM: yaw function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-C:\Users\BigBertha\Documents\GitHub\740\Project4\Project4\main.cpp(95,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\BigBertha\Documents\GitHub\740\Project4\Project4\main.cpp(95,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\BigBertha\Documents\GitHub\740\Project4\Project4\main.cpp(102,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-C:\Users\BigBertha\Documents\GitHub\740\Project4\Project4\main.cpp(102,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
-  Project4.vcxproj -> C:\Users\BigBertha\Documents\GitHub\740\Project4\Debug\Project4.exe
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(98,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(98,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(105,30): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+C:\Users\parro\Documents\GitHub\740\Project4\Project4\main.cpp(105,24): warning C4244: 'argument': conversion from 'float' to 'GLint', possible loss of data
+  Project4.vcxproj -> C:\Users\parro\Documents\GitHub\740\Project4\Debug\Project4.exe
